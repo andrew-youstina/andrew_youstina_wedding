@@ -106,92 +106,79 @@
       </section>
 
 
-      <!-- WEDDING GUESTBOOK -->
-<section class="guestbook-section section-pad" id="guestbook">
+
+      <section class="guestbook-section section-pad" id="guestbook">
   <div class="guestbook-inner">
-
     <div class="guestbook-ornament" aria-hidden="true">❦</div>
-
     <p class="eyebrow">A LITTLE LOVE GOES A LONG WAY</p>
-
-    <h2>Leave a Wish</h2>
-
+    <h2>Our Guestbook</h2>
     <p class="guestbook-intro">
-      Your love and kind words mean the world to us.
-      Leave a message for our new beginning.
+      Leave a wish for our new beginning, then turn the pages to read messages from our loved ones.
     </p>
-
-    <form id="guestbookForm" class="guestbook-form">
-      <div class="form-field">
-        <label for="guestName">YOUR NAME</label>
-        <input
-          id="guestName"
-          name="name"
-          type="text"
-          placeholder="Enter your name"
-          minlength="2"
-          maxlength="50"
-          autocomplete="name"
-          required
-        >
-      </div>
-
-      <div class="form-field">
-        <label for="guestMessage">YOUR WISH</label>
-        <textarea
-          id="guestMessage"
-          name="message"
-          placeholder="Write something lovely for the couple..."
-          minlength="3"
-          maxlength="500"
-          rows="5"
-          required
-        ></textarea>
-        <div class="character-count">
-          <span id="messageCount">0</span>/500
-        </div>
-      </div>
-
-      <button class="guestbook-submit" id="guestbookSubmit" type="submit">
-        <span>Send Your Wishes</span>
-        <span aria-hidden="true">♡</span>
-      </button>
-
-      <p
-        class="guestbook-status"
-        id="guestbookStatus"
-        role="status"
-        aria-live="polite"
-      ></p>
-
-      <p class="guestbook-note">
-        Your message will appear after approval. Thank you for being part of our story.
-      </p>
-    </form>
-
-    <div class="guestbook-divider" aria-hidden="true">
-      <span></span> ✦ <span></span>
-    </div>
-
-    <div class="guestbook-heading">
-      <p class="eyebrow">WORDS FROM OUR LOVED ONES</p>
-      <h3>With Love, From You</h3>
-    </div>
-
-    <p class="guestbook-loading" id="guestbookLoading">
-      Gathering your lovely wishes...
-    </p>
-
-    <div
-      class="guestbook-messages"
-      id="guestbookMessages"
-      aria-live="polite"
-    ></div>
-
-    <p class="guestbook-empty hidden" id="guestbookEmpty">
-      Your wishes will be treasured here. Be the first to leave one. ♡
-    </p>
-
+<form id="guestbookForm" class="guestbook-form">
+  <div class="form-field">
+    <label for="guestName">YOUR NAME</label>
+    <input id="guestName" name="name" type="text"
+      placeholder="Enter your name" minlength="2" maxlength="50"
+      autocomplete="name" required>
+  </div>
+  <div class="form-field">
+    <label for="guestMessage">YOUR WISH</label>
+    <textarea id="guestMessage" name="message"
+      placeholder="Write something lovely for the couple..."
+      minlength="3" maxlength="500" rows="4" required></textarea>
+    <div class="character-count"><span id="messageCount">0</span>/500</div>
+  </div>
+  <div class="guestbook-honeypot" aria-hidden="true">
+    <label for="guestWebsite">Leave this field empty</label>
+    <input id="guestWebsite" name="website" type="text"
+      tabindex="-1" autocomplete="off">
+  </div>
+  <button class="guestbook-submit" id="guestbookSubmit" type="submit">
+    <span>Send Your Wishes</span><span aria-hidden="true">♡</span>
+  </button>
+  <p class="guestbook-status" id="guestbookStatus"
+    role="status" aria-live="polite"></p>
+  <p class="guestbook-note">
+    Your wish will appear in the book as soon as it is sent.
+    Please keep your message kind and respectful. ♡
+  </p>
+</form>
+<div class="guestbook-divider" aria-hidden="true">
+  <span></span> ✦ <span></span>
+</div>
+<div class="guestbook-heading">
+  <p class="eyebrow">WORDS FROM OUR LOVED ONES</p>
+  <h3>Pages Full of Love</h3>
+</div>
+<div class="book-shell" aria-label="Wedding guestbook">
+  <div class="book-spine" aria-hidden="true"></div>
+  <div class="book-pages" id="guestbookPages">
+    <article class="book-page book-page-left">
+      <p class="page-number">♡</p>
+      <p class="book-empty-page">Your lovely wishes<br>will live here.</p>
+    </article>
+    <article class="book-page book-page-right">
+      <p class="page-number">♡</p>
+      <p class="book-empty-page">Be the first to<br>leave a message.</p>
+    </article>
+  </div>
+</div>
+<p class="guestbook-loading" id="guestbookLoading">
+  Gathering your lovely wishes...
+</p>
+<p class="guestbook-empty hidden" id="guestbookEmpty">
+  No wishes yet. Leave the first page of our story. ♡
+</p>
+<div class="book-controls">
+  <button type="button" id="guestbookPrev" class="book-nav" disabled>
+    ← Previous
+  </button>
+  <span id="guestbookPageLabel" class="book-page-label">Pages 1–2</span>
+  <button type="button" id="guestbookNext" class="book-nav" disabled>
+    Next →
+  </button>
+</div>
   </div>
 </section>
 

@@ -148,27 +148,28 @@ if ("IntersectionObserver" in window && !reducedMotion) {
 }
 
 
-/* ==========================================
-   WEDDING GUESTBOOK — SUPABASE CONNECTION
-========================================== */
 
-// STEP 1: Replace these two values with your Supabase project details.
+// WEDDING GUESTBOOK
+// Replace these placeholders with your actual Supabase project URL and public key.
 const SUPABASE_URL = "https://vrvukhfjphqrijiwlgmz.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_zpYrhTNGTjaVoW3I1Aj9Wg_8uSJFlds";
-
+const GUESTBOOK_TABLE = "guestbook_messages";
+const MESSAGES_PER_SPREAD = 2;
 const guestbookForm = document.getElementById("guestbookForm");
 const guestName = document.getElementById("guestName");
 const guestMessage = document.getElementById("guestMessage");
+const guestWebsite = document.getElementById("guestWebsite");
 const guestbookSubmit = document.getElementById("guestbookSubmit");
 const guestbookStatus = document.getElementById("guestbookStatus");
-const guestbookMessages = document.getElementById("guestbookMessages");
+const guestbookPages = document.getElementById("guestbookPages");
 const guestbookLoading = document.getElementById("guestbookLoading");
 const guestbookEmpty = document.getElementById("guestbookEmpty");
+const guestbookPrev = document.getElementById("guestbookPrev");
+const guestbookNext = document.getElementById("guestbookNext");
+const guestbookPageLabel = document.getElementById("guestbookPageLabel");
 const messageCount = document.getElementById("messageCount");
-
-const GUESTBOOK_TABLE = "guestbook_messages";
-const MAX_VISIBLE_MESSAGES = 30;
-
+let guestbookAllMessages = [];
+let guestbookPageIndex = 0;
 function guestbookIsConfigured() {
   return (
     SUPABASE_URL.startsWith("https://") &&
@@ -177,167 +178,205 @@ function guestbookIsConfigured() {
     !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE")
   );
 }
-
-function guestbookHeaders(extraHeaders = {}) {
+function guestbookHeaders(extra = {}) {
   return {
     apikey: SUPABASE_ANON_KEY,
     Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-    ...extraHeaders
+    ...extra
   };
 }
-
-// Keep the character counter updated.
-guestMessage.addEventListener("input", () => {
-  messageCount.textContent = String(guestMessage.value.length);
-});
-
-// Load only messages approved for public display.
-async function loadGuestbookMessages() {
+function makeBookPage(message, pageNumber) {
+  const page = document.createElement("article");
+  page.className = `book-page ${
+    pageNumber % 2 ? "book-page-left" : "book-page-right"
+  }`;
+  const number = document.createElement("p");
+  number.className = "page-number";
+  number.textContent = String(pageNumber);
+  page.appendChild(number);
+  if (!message) {
+    const empty = document.createElement("p");
+    empty.className = "book-empty-page";
+    empty.textContent = "A page waiting\nfor a lovely wish.";
+    page.appendChild(empty);
+    return page;
+  }
+  const text = document.createElement("p");
+  text.className = "book-message";
+  text.textContent = message.message;
+  const author = document.createElement("p");
+  author.className = "book-author";
+  author.appendChild(document.createTextNode(`With love, ${message.name}`));
+  const date = document.createElement("time");
+  date.className = "book-date";
+  const parsed = new Date(message.created_at);
+  if (!Number.isNaN(parsed.getTime())) {
+    date.dateTime = parsed.toISOString();
+    date.textContent = parsed.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "Africa/Cairo"
+    });
+  }
+  author.appendChild(date);
+  page.append(text, author);
+  return page;
+}
+function renderGuestbook() {
+  const start = guestbookPageIndex * MESSAGES_PER_SPREAD;
+  const current = guestbookAllMessages.slice(
+    start,
+    start + MESSAGES_PER_SPREAD
+  );
+  guestbookPages.replaceChildren(
+    makeBookPage(current[0], start + 1),
+    makeBookPage(current[1], start + 2)
+  );
+  const total = guestbookAllMessages.length;
+  const first = total ? start + 1 : 0;
+  const last = Math.min(start + MESSAGES_PER_SPREAD, total);
+  guestbookPageLabel.textContent = total
+    ? `Messages ${first}–${last} of ${total}`
+    : "No messages yet";
+  guestbookPrev.disabled = guestbookPageIndex <= 0;
+  guestbookNext.disabled =
+    start + MESSAGES_PER_SPREAD >= total;
+}
+async function loadguestMessages() {
   guestbookLoading.classList.remove("hidden");
   guestbookEmpty.classList.add("hidden");
-  guestbookMessages.replaceChildren();
-
   if (!guestbookIsConfigured()) {
     guestbookLoading.textContent =
       "The guestbook will be available soon.";
     return;
   }
-
   try {
     const url = new URL(
       `/rest/v1/${GUESTBOOK_TABLE}`,
       SUPABASE_URL
     );
-
     url.searchParams.set("select", "id,name,message,created_at");
     url.searchParams.set("approved", "eq.true");
     url.searchParams.set("order", "created_at.desc");
-    url.searchParams.set("limit", String(MAX_VISIBLE_MESSAGES));
-
+    url.searchParams.set("limit", "200");
     const response = await fetch(url, {
       method: "GET",
       headers: guestbookHeaders()
     });
-
     if (!response.ok) {
-      throw new Error("Could not load approved messages.");
+      throw new Error(
+        `Guestbook read failed (${response.status})`
+      );
     }
-
-    const messages = await response.json();
-
+    guestbookAllMessages = await response.json();
+    guestbookPageIndex = 0;
     guestbookLoading.classList.add("hidden");
-
-    if (!messages.length) {
-      guestbookEmpty.classList.remove("hidden");
-      return;
-    }
-
-    const fragment = document.createDocumentFragment();
-
-    messages.forEach((message) => {
-      const card = document.createElement("article");
-      card.className = "guest-message";
-
-      const quote = document.createElement("p");
-      quote.textContent = message.message;
-
-      const footer = document.createElement("footer");
-      footer.textContent = `WITH LOVE, ${message.name}`;
-
-      const date = document.createElement("time");
-      const parsedDate = new Date(message.created_at);
-
-      if (!Number.isNaN(parsedDate.getTime())) {
-        date.dateTime = parsedDate.toISOString();
-        date.textContent = parsedDate.toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-          timeZone: "Africa/Cairo"
-        });
-      }
-
-      footer.appendChild(date);
-      card.append(quote, footer);
-      fragment.appendChild(card);
-    });
-
-    guestbookMessages.appendChild(fragment);
+    guestbookEmpty.classList.toggle(
+      "hidden",
+      guestbookAllMessages.length > 0
+    );
+    renderGuestbook();
   } catch (error) {
     guestbookLoading.textContent =
       "We couldn't load the wishes right now. Please try again later.";
-
     console.error("Guestbook loading error:", error);
   }
 }
-
-// Submit a new message for approval.
-guestbookForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const name = guestName.value.trim();
-  const message = guestMessage.value.trim();
-
-  if (name.length < 2 || name.length > 50) {
-    guestbookStatus.textContent =
-      "Please enter a name between 2 and 50 characters.";
-    return;
-  }
-
-  if (message.length < 3 || message.length > 500) {
-    guestbookStatus.textContent =
-      "Your wish must be between 3 and 500 characters.";
-    return;
-  }
-
-  if (!guestbookIsConfigured()) {
-    guestbookStatus.textContent =
-      "The guestbook is not connected yet. Please try again later.";
-    return;
-  }
-
-  guestbookSubmit.disabled = true;
-  guestbookSubmit.querySelector("span:first-child").textContent =
-    "Sending...";
-  guestbookStatus.textContent = "";
-
-  try {
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/${GUESTBOOK_TABLE}`,
-      {
-        method: "POST",
-        headers: guestbookHeaders({
-          "Content-Type": "application/json",
-          Prefer: "return=minimal"
-        }),
-        body: JSON.stringify({
-          name,
-          message,
-          approved: false
-        })
-      }
+if (guestMessage && messageCount) {
+  guestMessage.addEventListener("input", () => {
+    messageCount.textContent = String(
+      guestMessage.value.length
     );
-
-    if (!response.ok) {
-      throw new Error("Message submission failed.");
+  });
+}
+if (guestbookPrev) {
+  guestbookPrev.addEventListener("click", () => {
+    if (guestbookPageIndex > 0) {
+      guestbookPageIndex--;
+      renderGuestbook();
     }
-
-    guestbookForm.reset();
-    messageCount.textContent = "0";
-
-    guestbookStatus.textContent =
-      "Thank you for your lovely wish! It will appear after approval. ♡";
-  } catch (error) {
-    guestbookStatus.textContent =
-      "We couldn't send your wish. Please check your connection and try again.";
-
-    console.error("Guestbook submission error:", error);
-  } finally {
-    guestbookSubmit.disabled = false;
+  });
+}
+if (guestbookNext) {
+  guestbookNext.addEventListener("click", () => {
+    if (
+      (guestbookPageIndex + 1) * MESSAGES_PER_SPREAD <
+      guestbookAllMessages.length
+    ) {
+      guestbookPageIndex++;
+      renderGuestbook();
+    }
+  });
+}
+if (guestbookForm) {
+  guestbookForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const name = guestName.value.trim();
+    const message = guestMessage.value.trim();
+    if (guestWebsite && guestWebsite.value.trim()) {
+      return;
+    }
+    if (name.length < 2 || name.length > 50) {
+      guestbookStatus.textContent =
+        "Please enter a name between 2 and 50 characters.";
+      return;
+    }
+    if (message.length < 3 || message.length > 500) {
+      guestbookStatus.textContent =
+        "Your wish must be between 3 and 500 characters.";
+      return;
+    }
+    if (!guestbookIsConfigured()) {
+      guestbookStatus.textContent =
+        "The guestbook is not connected yet. Please try again later.";
+      return;
+    }
+    guestbookSubmit.disabled = true;
     guestbookSubmit.querySelector("span:first-child").textContent =
-      "Send Your Wishes";
-  }
-});
-
-// Load the guestbook when the page is ready.
-loadGuestbookMessages();
+      "Sending...";
+    guestbookStatus.textContent = "";
+    try {
+      const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/${GUESTBOOK_TABLE}`,
+        {
+          method: "POST",
+          headers: guestbookHeaders({
+            "Content-Type": "application/json",
+            Prefer: "return=minimal"
+          }),
+          body: JSON.stringify({
+            name,
+            message,
+            approved: true
+          })
+        }
+      );
+      if (!response.ok) {
+        throw new Error(
+          `Message submission failed (${response.status}): ${await response.text()}`
+        );
+      }
+      guestbookForm.reset();
+      if (messageCount) {
+        messageCount.textContent = "0";
+      }
+      guestbookStatus.textContent =
+        "Your wish is in the book! Thank you for being part of our story. ♡";
+      await loadguestMessages();
+      document.getElementById("guestbook").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    } catch (error) {
+      guestbookStatus.textContent =
+        "We couldn't send your wish. Please try again in a moment.";
+      console.error("Guestbook submission error:", error);
+    } finally {
+      guestbookSubmit.disabled = false;
+      guestbookSubmit.querySelector("span:first-child").textContent =
+        "Send Your Wishes";
+    }
+  });
+  loadguestMessages();
+}

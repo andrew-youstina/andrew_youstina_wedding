@@ -37,25 +37,36 @@ music.play().catch((error) => {
 });
 });
 
-const weddingDate = new Date("2026-11-07T15:00:00+03:00").getTime();
-function updateCountdown() {
-  let diff = weddingDate - Date.now();
-  if (diff <= 0) {
-    document.getElementById("days").textContent = "00";
-    document.getElementById("hours").textContent = "00";
-    document.getElementById("minutes").textContent = "00";
-    document.getElementById("seconds").textContent = "00";
-    return;
-  }
-  const d = Math.floor(diff / 86400000);
-  const h = Math.floor((diff % 86400000) / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
-  document.getElementById("days").textContent = String(d).padStart(2,"0");
-  document.getElementById("hours").textContent = String(h).padStart(2,"0");
-  document.getElementById("minutes").textContent = String(m).padStart(2,"0");
-  document.getElementById("seconds").textContent = String(s).padStart(2,"0");
+// إضافة علامات التنصيص حول التاريخ
+const weddingDate = new Date("2026-11-07T15:00:00+03:00").getTime(); 
+
+function updateCountdown() { 
+    let diff = weddingDate - Date.now(); 
+
+    if (diff <= 0) { 
+        // إضافة علامات تنصيص حول أسماء الـ IDs ونصوص الأصفار
+        document.getElementById("days").textContent = "00"; 
+        document.getElementById("hours").textContent = "00"; 
+        document.getElementById("minutes").textContent = "00"; 
+        document.getElementById("seconds").textContent = "00"; 
+        return; 
+    } 
+
+    const d = Math.floor(diff / 86400000); 
+    const h = Math.floor((diff % 86400000) / 3600000); 
+    const m = Math.floor((diff % 3600000) / 60000); 
+    const s = Math.floor((diff % 60000) / 1000); 
+
+    // إضافة علامات تنصيص حول أسماء الـ IDs
+    document.getElementById("days").textContent = String(d).padStart(2, "0"); 
+    document.getElementById("hours").textContent = String(h).padStart(2, "0"); 
+    document.getElementById("minutes").textContent = String(m).padStart(2, "0"); 
+    document.getElementById("seconds").textContent = String(s).padStart(2, "0"); 
 }
+
+// تأكد من تشغيل الدالة كل ثانية لتحديث العداد
+setInterval(updateCountdown, 1000);
+
 updateCountdown();
 setInterval(updateCountdown, 1000);
 

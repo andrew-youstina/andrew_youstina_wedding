@@ -37,7 +37,7 @@ music.play().catch((error) => {
 });
 });
 
-const weddingDate = new Date("2026-11-07T15:00:00+02:00").getTime();
+const weddingDate = new Date("2026-11-07T15:00:00+03:00").getTime();
 function updateCountdown() {
   let diff = weddingDate - Date.now();
   if (diff <= 0) {

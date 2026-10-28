@@ -45,3 +45,80 @@ h1{font-size:clamp(56px,11vw,105px);line-height:.88;color:var(--wine);margin:0 0
 footer{background:var(--wine-dark);color:#d8c3a2;text-align:center;padding:23px 12px;font-size:8px;letter-spacing:.2em}
 .music-button{position:fixed;right:18px;bottom:18px;z-index:30;display:flex;align-items:center;gap:9px;background:var(--wine);color:var(--cream);border:1px solid #d3b27a;padding:12px 15px;border-radius:30px;font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:.1em;box-shadow:0 6px 20px #35101d33;cursor:pointer}.music-button .music-icon{font-size:16px;color:#e4c48d}.music-button.playing .music-icon{animation:spin 3s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:600px){.top-label{margin-bottom:38px}.section-pad{padding:68px 18px}.event-grid{grid-template-columns:1fr}.event-card{padding:30px 18px}.ornament{font-size:8px;letter-spacing:.13em}.mobile-break{display:block}.desktop-break{display:none}.hero{padding-top:60px}.date-card{padding-left:32px;padding-right:32px}.photo-frame{min-height:230px}.photo-placeholder{min-height:230px}.music-button{right:12px;bottom:12px;padding:10px 13px}.countdown{gap:22px}.countdown div{min-width:58px}}
+
+
+
+/* Elegant floral frame around the couple photo */
+.photo-frame {
+  max-width: 520px;
+  margin: 35px auto;
+  padding: 12px;
+  border: 1px solid #b99158;
+  position: relative;
+  isolation: isolate;
+  background: #fffaf1;
+  box-shadow: 0 15px 40px rgba(64, 20, 33, 0.12);
+}
+
+.photo-frame::before,
+.photo-frame::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-size: 32px;
+  line-height: 1.8;
+  color: #641f32;
+  text-shadow: 0 2px 5px rgba(64, 20, 33, 0.15);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.photo-frame::before {
+  content: "❦ ❀ ❦";
+  right: calc(100% + 8px);
+}
+
+.photo-frame::after {
+  content: "❦ ❀ ❦";
+  left: calc(100% + 8px);
+}
+
+.photo-frame img {
+  width: 100%;
+  max-height: 650px;
+  object-fit: cover;
+  display: block;
+  border: 1px solid #b991584d;
+}
+
+.photo-caption {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 25px;
+  color: #641f32;
+  margin: 30px 0 0;
+}
+
+@media (max-width: 600px) {
+  .photo-frame {
+    margin: 25px 28px;
+  }
+
+  .photo-frame::before,
+  .photo-frame::after {
+    font-size: 23px;
+  }
+
+  .photo-frame::before {
+    right: calc(100% + 2px);
+  }
+
+  .photo-frame::after {
+    left: calc(100% + 2px);
+  }
+
+  .photo-caption {
+    font-size: 22px;
+  }
+}

@@ -48,3 +48,290 @@ footer{background:var(--wine-dark);color:#d8c3a2;text-align:center;padding:23px 
 
 
 
+
+/* =========================================
+   ANDREW & YOUSTINA — WEDDING MOTION DESIGN
+   Add this at the END of style.css
+========================================= */
+
+/* 1. A soft, moving light across the hero */
+.hero {
+  background: linear-gradient(
+    125deg,
+    #fffaf1,
+    #f2e3d5,
+    #f9efe5,
+    #ead8c8,
+    #fffaf1
+  );
+  background-size: 300% 300%;
+  animation: weddingBackground 18s ease infinite;
+  isolation: isolate;
+}
+
+@keyframes weddingBackground {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 2. Slowly floating decorative rings */
+.hero:before,
+.hero:after {
+  animation: floatingRings 12s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero:after {
+  animation-delay: -6s;
+}
+
+@keyframes floatingRings {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0.45;
+  }
+  to {
+    transform: translate3d(18px, -14px, 0) rotate(12deg);
+    opacity: 0.9;
+  }
+}
+
+/* 3. Elegant entrance for the invitation text */
+.hero .ornament,
+.hero .eyebrow,
+.hero h1,
+.hero .divider,
+.hero .intro,
+.hero .date-card,
+.hero .scroll-cue {
+  animation: elegantReveal 1s both;
+}
+
+.hero .ornament {
+  animation-delay: 0.1s;
+}
+
+.hero .eyebrow {
+  animation-delay: 0.25s;
+}
+
+.hero h1 {
+  animation-delay: 0.4s;
+}
+
+.hero .divider {
+  animation-delay: 0.55s;
+}
+
+.hero .intro {
+  animation-delay: 0.7s;
+}
+
+.hero .date-card {
+  animation-delay: 0.85s;
+}
+
+.hero .scroll-cue {
+  animation-delay: 1s;
+}
+
+@keyframes elegantReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 4. A subtle golden shimmer on the ornament */
+.hero .ornament {
+  animation:
+    elegantReveal 1s both,
+    ornamentGlow 4s ease-in-out 1.2s infinite;
+}
+
+@keyframes ornamentGlow {
+  0%, 100% {
+    color: #b99158;
+    text-shadow: 0 0 0 transparent;
+  }
+  50% {
+    color: #8d4657;
+    text-shadow: 0 0 14px #b9915840;
+  }
+}
+
+/* 5. Give the couple's photo a more luxurious frame */
+.photo-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-frame {
+  border: 1px solid #b99158;
+  background: #fffaf1;
+  box-shadow:
+    0 18px 45px #40142112,
+    0 4px 12px #4014210b;
+  transition:
+    box-shadow 0.5s ease,
+    transform 0.5s ease;
+}
+
+.photo-frame img {
+  transition: transform 0.8s ease;
+}
+
+@media (hover: hover) {
+  .photo-frame:hover {
+    box-shadow:
+      0 24px 55px #40142120,
+      0 0 0 5px #b9915812;
+    transform: translateY(-4px);
+  }
+
+  .photo-frame:hover img {
+    transform: scale(1.015);
+  }
+}
+
+/* 6. Soft entrance for the countdown and venue cards */
+.countdown-section,
+.details-section,
+.closing-section {
+  position: relative;
+}
+
+.event-card {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+@media (hover: hover) {
+  .event-card:hover {
+    transform: translateY(-6px);
+    border-color: #b99158;
+    box-shadow: 0 16px 32px #40142112;
+  }
+}
+
+/* 7. Keep animations comfortable for visitors */
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .hero:before,
+  .hero:after,
+  .hero .ornament,
+  .hero .eyebrow,
+  .hero h1,
+  .hero .divider,
+  .hero .intro,
+  .hero .date-card,
+  .hero .scroll-cue {
+    animation: none !important;
+  }
+
+  .photo-frame,
+  .photo-frame img,
+  .event-card {
+    transition: none !important;
+  }
+}
+
+
+
+
+/* Romantic floating rose petals */
+.petal-layer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.petal {
+  position: absolute;
+  top: -35px;
+  width: 10px;
+  height: 15px;
+  border-radius: 80% 15% 70% 20%;
+  background: linear-gradient(135deg, #a64e63, #641f32 75%);
+  opacity: 0;
+  animation: petalFall linear infinite;
+  will-change: transform;
+}
+
+.petal:nth-child(3n) {
+  background: linear-gradient(135deg, #e8cda8, #b99158);
+  width: 7px;
+  height: 11px;
+}
+
+.petal:nth-child(4n) {
+  width: 6px;
+  height: 9px;
+  opacity: 0.7;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translate3d(0, -5vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: translate3d(45px, 50vh, 0) rotate(230deg);
+    opacity: 0.5;
+  }
+
+  90% {
+    opacity: 0.35;
+  }
+
+  100% {
+    transform: translate3d(-35px, 110vh, 0) rotate(500deg);
+    opacity: 0;
+  }
+}
+
+/* Reveal sections gently while scrolling */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(25px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Avoid excessive motion for visitors who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .petal {
+    display: none;
+    animation: none;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

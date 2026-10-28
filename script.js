@@ -90,3 +90,52 @@ musicButton.addEventListener("click", async () => {
     musicButton.setAttribute("aria-label", "Play background music");
   }
 });
+
+
+
+// Romantic falling petals
+const petalLayer = document.createElement("div");
+petalLayer.className = "petal-layer";
+petalLayer.setAttribute("aria-hidden", "true");
+document.body.appendChild(petalLayer);
+
+const reducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+if (!reducedMotion) {
+  for (let i = 0; i < 14; i++) {
+    const petal = document.createElement("span");
+    petal.className = "petal";
+
+    petal.style.left = `${Math.random() * 100}%`;
+    petal.style.animationDuration = `${12 + Math.random() * 12}s`;
+    petal.style.animationDelay = `${-Math.random() * 20}s`;
+
+    petalLayer.appendChild(petal);
+  }
+}
+
+// Reveal invitation sections as visitors scroll
+const revealTargets = document.querySelectorAll(
+  ".photo-section, .countdown-section, .details-section, .closing-section"
+);
+
+if ("IntersectionObserver" in window && !reducedMotion) {
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  revealTargets.forEach((section) => {
+    section.classList.add("reveal-on-scroll");
+    revealObserver.observe(section);
+  });
+}

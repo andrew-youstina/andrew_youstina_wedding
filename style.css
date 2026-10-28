@@ -1104,3 +1104,338 @@ body {
 
 .date-card::before,
 .date-card::after {display: none !important}
+
+
+
+
+/* ==========================================
+   ANDREW & YOUSTINA — WEDDING GUESTBOOK
+========================================== */
+
+.guestbook-section {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%, #ead8c8 0%, transparent 65%),
+    #fffaf2;
+  color: #39252a;
+}
+
+.guestbook-inner {
+  width: min(100%, 760px);
+  margin: 0 auto;
+}
+
+.guestbook-ornament {
+  margin-bottom: 15px;
+  color: #b99158;
+  font-family: Georgia, serif;
+  font-size: 44px;
+  text-align: center;
+}
+
+.guestbook-section > .guestbook-inner > .eyebrow,
+.guestbook-heading .eyebrow {
+  color: #98754c;
+  text-align: center;
+}
+
+.guestbook-section h2 {
+  margin-bottom: 14px;
+  color: #641f32;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(45px, 7vw, 68px);
+  font-weight: 500;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.guestbook-intro {
+  max-width: 480px;
+  margin: 0 auto 38px;
+  color: #806b63;
+  font-size: 13px;
+  line-height: 1.9;
+  text-align: center;
+}
+
+.guestbook-form {
+  padding: clamp(22px, 5vw, 42px);
+  border: 1px solid #b9915877;
+  background: rgba(255, 255, 255, 0.48);
+  box-shadow: 0 16px 40px rgba(60, 20, 32, 0.055);
+  position: relative;
+}
+
+.guestbook-form::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(185, 145, 88, 0.2);
+  pointer-events: none;
+}
+
+.form-field {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 10px;
+  color: #641f32;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.19em;
+}
+
+.form-field input,
+.form-field textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid #d8c5b2;
+  border-radius: 0;
+  padding: 15px 16px;
+  background: rgba(255, 250, 242, 0.8);
+  color: #39252a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: #ad9a8e;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: #a97947;
+  background: #fffdf8;
+  box-shadow: 0 0 0 3px rgba(185, 145, 88, 0.12);
+}
+
+.form-field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.character-count {
+  margin-top: 7px;
+  color: #9b8679;
+  font-size: 10px;
+  text-align: right;
+}
+
+.guestbook-submit {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 20px;
+  border: 1px solid #b99158;
+  border-radius: 0;
+  background: #641f32;
+  color: #fff7e9;
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.guestbook-submit span:last-child {
+  color: #e7c994;
+  font-size: 18px;
+}
+
+.guestbook-submit:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.guestbook-status {
+  position: relative;
+  min-height: 20px;
+  margin: 15px 0 0;
+  color: #641f32;
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.guestbook-note {
+  position: relative;
+  margin: 8px 0 0;
+  color: #9b8679;
+  font-size: 10px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.guestbook-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 58px auto 48px;
+  color: #b99158;
+  font-size: 14px;
+}
+
+.guestbook-divider span {
+  width: 75px;
+  height: 1px;
+  background: #b9915877;
+}
+
+.guestbook-heading {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.guestbook-heading h3 {
+  margin: 12px 0 0;
+  color: #641f32;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(32px, 5vw, 45px);
+  font-weight: 500;
+}
+
+.guestbook-loading,
+.guestbook-empty {
+  color: #92796b;
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.guestbook-messages {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.guest-message {
+  position: relative;
+  min-width: 0;
+  padding: 25px 22px 22px;
+  border: 1px solid #b9915855;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 24px rgba(60, 20, 32, 0.035);
+  overflow-wrap: anywhere;
+  animation: guestMessageAppear 0.45s ease both;
+}
+
+.guest-message::before {
+  content: "“";
+  display: block;
+  margin-bottom: -5px;
+  color: #b99158;
+  font-family: Georgia, serif;
+  font-size: 42px;
+  line-height: 1;
+}
+
+.guest-message p {
+  margin: 12px 0 20px;
+  color: #59433e;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 21px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.guest-message footer {
+  padding-top: 12px;
+  border-top: 1px solid #b9915833;
+  color: #641f32;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-align: left;
+}
+
+.guest-message time {
+  display: block;
+  margin-top: 6px;
+  color: #a18a7c;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+}
+
+@keyframes guestMessageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .guestbook-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: #4c1727;
+  }
+
+  .guest-message {
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .guest-message:hover {
+    transform: translateY(-3px);
+    border-color: #b99158aa;
+    box-shadow: 0 14px 30px rgba(60, 20, 32, 0.07);
+  }
+}
+
+@media (max-width: 600px) {
+  .guestbook-section {
+    padding: 65px 18px;
+  }
+
+  .guestbook-intro {
+    margin-bottom: 28px;
+    font-size: 12px;
+  }
+
+  .guestbook-form {
+    padding: 25px 18px;
+  }
+
+  .guestbook-messages {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .guest-message {
+    padding: 22px 19px;
+  }
+
+  .guest-message p {
+    font-size: 20px;
+  }
+
+  .guestbook-divider {
+    margin: 44px auto 38px;
+  }
+}

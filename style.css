@@ -335,3 +335,301 @@ footer{background:var(--wine-dark);color:#d8c3a2;text-align:center;padding:23px 
     transition: none;
   }
 }
+
+
+
+/* ==========================================
+   ANDREW & YOUSTINA
+   LUXURY WEDDING DESIGN
+========================================== */
+
+:root {
+  --wine: #641f32;
+  --wine-dark: #300d19;
+  --wine-light: #8d4657;
+  --cream: #f7f0e5;
+  --paper: #fffaf1;
+  --gold: #b99158;
+}
+
+/* Elegant invitation background */
+.hero {
+  isolation: isolate;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 35%,
+      #fffdf6 0%,
+      #f8eee0 48%,
+      #ead5c2 100%
+    );
+
+  border-bottom: 1px solid #b991584d;
+}
+
+/* Warm golden ambient light */
+.hero::before {
+  width: 320px;
+  height: 320px;
+  top: 8%;
+  left: -190px;
+
+  background: radial-gradient(
+    circle,
+    #d9b77a2e 0%,
+    #d9b77a0c 45%,
+    transparent 72%
+  );
+
+  border: none;
+  border-radius: 50%;
+
+  animation: ambientLight 9s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+.hero::after {
+  width: 350px;
+  height: 350px;
+  bottom: 5%;
+  right: -210px;
+
+  background: radial-gradient(
+    circle,
+    #8d46571c 0%,
+    #8d465708 45%,
+    transparent 72%
+  );
+
+  border: none;
+  border-radius: 50%;
+
+  animation: ambientLight 12s ease-in-out infinite alternate-reverse;
+  z-index: -1;
+}
+
+@keyframes ambientLight {
+  from {
+    transform: translate(0, 0) scale(0.9);
+    opacity: 0.5;
+  }
+
+  to {
+    transform: translate(35px, -20px) scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Elegant names */
+.hero h1 {
+  text-shadow: 0 5px 24px #641f320b;
+  letter-spacing: -0.035em;
+}
+
+.hero h1 span {
+  display: inline-block;
+  text-shadow: 0 0 22px #b9915826;
+}
+
+/* Ornamental dividers */
+.divider {
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.divider span {
+  width: clamp(45px, 8vw, 85px);
+  background: linear-gradient(
+    to right,
+    transparent,
+    #b99158
+  );
+}
+
+.divider span:last-child {
+  transform: rotate(180deg);
+}
+
+/* Date card */
+.date-card {
+  position: relative;
+  min-width: 260px;
+  padding: 18px 38px;
+
+  border-top: 1px solid #b99158a0;
+  border-bottom: 1px solid #b99158a0;
+
+  background: #fffaf13d;
+}
+
+.date-card::before,
+.date-card::after {
+  content: "✦";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--gold);
+  font-size: 13px;
+  background: #f7f0e5;
+  padding: 0 10px;
+}
+
+.date-card::before {
+  top: -9px;
+}
+
+.date-card::after {
+  bottom: -9px;
+}
+
+/* Couple portrait */
+.photo-section {
+  position: relative;
+  isolation: isolate;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 40%,
+      #fffdf8 0%,
+      #fffaf1 55%,
+      #f0e1d0 100%
+    );
+}
+
+.photo-frame {
+  max-width: 500px;
+  padding: 10px;
+
+  border: 1px solid var(--gold);
+
+  background: linear-gradient(
+    135deg,
+    #fffdf7,
+    #ead6b8,
+    #fffaf1
+  );
+
+  box-shadow:
+    0 18px 50px #40142118,
+    0 0 0 5px #b991580c;
+
+  transition:
+    transform 0.6s ease,
+    box-shadow 0.6s ease;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: auto;
+  max-height: 650px;
+  object-fit: contain;
+
+  border: 1px solid #b991584d;
+}
+
+/* Photo caption */
+.photo-caption {
+  font-size: clamp(23px, 4vw, 30px);
+  margin-top: 28px;
+  color: var(--wine);
+}
+
+/* Countdown cards */
+.countdown div {
+  padding: 17px 12px;
+  min-width: 88px;
+
+  border: 1px solid #d9b77a70;
+  border-radius: 5px;
+
+  background: linear-gradient(
+    145deg,
+    #ffffff12,
+    #b991580a
+  );
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease;
+}
+
+@media (hover: hover) {
+  .countdown div:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+  }
+}
+
+/* Ceremony and reception cards */
+.event-card {
+  border-radius: 5px;
+
+  background: linear-gradient(
+    145deg,
+    #fffdf8,
+    #f8eee0
+  );
+
+  border: 1px solid #b9915877;
+
+  box-shadow:
+    0 12px 30px #40142108,
+    inset 0 0 0 4px #b9915808;
+}
+
+.event-icon {
+  color: var(--gold);
+  font-size: 30px;
+}
+
+.map-link {
+  border-radius: 30px;
+  background: var(--wine);
+  color: var(--cream);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+@media (hover: hover) {
+  .map-link:hover {
+    background: var(--wine-dark);
+    color: var(--cream);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px #40142125;
+  }
+}
+
+/* Mobile refinement */
+@media (max-width: 600px) {
+  .date-card {
+    min-width: 230px;
+    padding: 17px 28px;
+  }
+
+  .countdown div {
+    min-width: 65px;
+    padding: 12px 7px;
+  }
+
+  .photo-frame {
+    padding: 7px;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero::before,
+  .hero::after {
+    animation: none !important;
+  }
+
+  .photo-frame,
+  .countdown div,
+  .map-link {
+    transition: none !important;
+  }
+}

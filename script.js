@@ -32,9 +32,17 @@ openInvite.addEventListener("click", () => {
   }, 1000);
   const music = document.getElementById("backgroundMusic");
 
-music.play().catch((error) => {
+music.play()
+  .then(() => {
+    musicButton.classList.add("playing");
+    musicLabel.textContent = "PAUSE MUSIC";
+    musicButton.setAttribute("aria-label", "Pause background music");
+  })
+  .catch((error) => {
     console.log("Music playback was blocked:", error);
-});
+    musicButton.classList.remove("playing");
+    musicLabel.textContent = "PLAY MUSIC";
+  });
 });
 
 // إضافة علامات التنصيص حول التاريخ
@@ -65,7 +73,6 @@ function updateCountdown() {
 }
 
 // تأكد من تشغيل الدالة كل ثانية لتحديث العداد
-setInterval(updateCountdown, 1000);
 
 updateCountdown();
 setInterval(updateCountdown, 1000);

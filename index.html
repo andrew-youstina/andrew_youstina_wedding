@@ -54,10 +54,19 @@
       </header>
 
       <section class="photo-section section-pad">
-        <div class="photo-frame">
-          <img id="couplePhoto" src="images/couple.jpg" alt="Andrew and Youstina" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-         
-        </div>
+       <div class="photo-frame">
+  <img
+    id="couplePhoto"
+    src="images/couple.jpg"
+    alt="Andrew and Youstina"
+    loading="lazy"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+  >
+  <div class="photo-placeholder" style="display:none">
+    <span>Andrew &amp; Youstina</span>
+    <small>Our beautiful beginning</small>
+  </div>
+</div>
         <p class="photo-caption">A beautiful beginning, a lifetime of love.</p>
       </section>
 
@@ -90,7 +99,7 @@
             <h3>Almasa Hall</h3>
             <p class="venue-subtitle">Aviation Club Hotel — Hall Complex</p>
             <p class="event-arabic">قاعة الماسة — مجمع قاعات فندق نادي الطيران</p>
-            <p class="event-time">Following the ceremony</p>
+            <p class="event-time">Following the ceremony<br>5:00 PM</p>
             <a class="map-link" id="hallMap" href="#" target="_blank" rel="noopener">OPEN HALL MAP ↗</a>
           </article>
         </div>
